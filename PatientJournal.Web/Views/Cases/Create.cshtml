@@ -1,0 +1,15 @@
+@using PatientJournal.Shared.Models
+@model SimulationCase
+@{
+    ViewData["Title"] = "Create Case";
+    var medsPlaceholder = "DrugName|Dosage|Route|Frequency\nMetoprolol|50mg|PO|Daily";
+}
+<h2>Create New Case</h2>
+<form method="post">
+    <div asp-validation-summary="All" class="text-danger mb-2"></div>
+    @await Html.PartialAsync("_CaseForm", Model)
+    <div class="mt-3">
+        <button type="submit" class="btn btn-success">Create</button>
+        <a asp-action="Index" class="btn btn-outline-secondary ms-2">Cancel</a>
+    </div>
+</form>

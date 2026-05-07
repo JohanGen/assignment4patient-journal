@@ -1,0 +1,227 @@
+﻿<Window x:Class="PatientJournal.Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Patient Journal – Simulation Interface" Height="750" Width="1100"
+        WindowStartupLocation="CenterScreen" Background="#F0F4F8">
+    <Window.Resources>
+        <Style x:Key="VitalBox" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#CBD5E0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="4"/>
+        </Style>
+        <Style x:Key="VitalLabel" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Foreground" Value="#718096"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="VitalValue" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="#2D3748"/>
+        </Style>
+        <Style x:Key="SectionHeader" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#4A5568"/>
+            <Setter Property="Margin" Value="0,8,0,4"/>
+        </Style>
+        <Style x:Key="ActionButton" TargetType="Button">
+            <Setter Property="Background" Value="#3182CE"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Top Bar -->
+        <Border Grid.Row="0" Background="#2B6CB0" CornerRadius="6" Padding="12,8" Margin="0,0,0,8">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel>
+                    <TextBlock x:Name="CaseTitleText" Text="No Active Session" FontSize="18" FontWeight="Bold" Foreground="White"/>
+                    <TextBlock x:Name="PatientInfoText" Text="Load a session to begin" FontSize="12" Foreground="#BEE3F8"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <TextBlock x:Name="GoalTimerText" Text="" FontSize="13" Foreground="#FBD38D" VerticalAlignment="Center" Margin="0,0,16,0"/>
+                    <Button x:Name="LoadSessionBtn" Content="Load Active Session" Style="{StaticResource ActionButton}"
+                            Background="#276749" Click="LoadSessionBtn_Click" Margin="0,0,8,0"/>
+                    <Button x:Name="EndSessionBtn" Content="End Session" Style="{StaticResource ActionButton}"
+                            Background="#C53030" Click="EndSessionBtn_Click" IsEnabled="False"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Vitals Bar -->
+        <Border Grid.Row="1" Background="White" BorderBrush="#CBD5E0" BorderThickness="1" CornerRadius="6" Padding="8" Margin="0,0,0,8">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Border Style="{StaticResource VitalBox}" Width="130">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource VitalLabel}" Text="BLOOD PRESSURE"/>
+                        <TextBlock x:Name="BPText" Style="{StaticResource VitalValue}" Text="--/--" Foreground="#E53E3E"/>
+                        <TextBlock Style="{StaticResource VitalLabel}" Text="mmHg"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource VitalBox}" Width="110">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource VitalLabel}" Text="HEART RATE"/>
+                        <TextBlock x:Name="HRText" Style="{StaticResource VitalValue}" Text="--" Foreground="#DD6B20"/>
+                        <TextBlock Style="{StaticResource VitalLabel}" Text="bpm"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource VitalBox}" Width="110">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource VitalLabel}" Text="RESP. RATE"/>
+                        <TextBlock x:Name="RRText" Style="{StaticResource VitalValue}" Text="--" Foreground="#2B6CB0"/>
+                        <TextBlock Style="{StaticResource VitalLabel}" Text="/min"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource VitalBox}" Width="110">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource VitalLabel}" Text="SpO₂"/>
+                        <TextBlock x:Name="SpO2Text" Style="{StaticResource VitalValue}" Text="--" Foreground="#276749"/>
+                        <TextBlock Style="{StaticResource VitalLabel}" Text="%"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource VitalBox}" Width="110">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource VitalLabel}" Text="TEMPERATURE"/>
+                        <TextBlock x:Name="TempText" Style="{StaticResource VitalValue}" Text="--" Foreground="#744210"/>
+                        <TextBlock Style="{StaticResource VitalLabel}" Text="°C"/>
+                    </StackPanel>
+                </Border>
+                <Border Style="{StaticResource VitalBox}" Width="110">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource VitalLabel}" Text="LAST UPDATED"/>
+                        <TextBlock x:Name="LastUpdateText" Style="{StaticResource VitalValue}" Text="--" FontSize="14" Foreground="#718096"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="320"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left: Event Log -->
+            <Border Background="White" BorderBrush="#CBD5E0" BorderThickness="1" CornerRadius="6" Padding="12" Margin="0,0,8,0">
+                <DockPanel>
+                    <TextBlock DockPanel.Dock="Top" Style="{StaticResource SectionHeader}" Text="📋 Event Log / Timeline"/>
+                    <Border DockPanel.Dock="Top" Background="#EBF8FF" BorderBrush="#90CDF4" BorderThickness="1" CornerRadius="4" Padding="8" Margin="0,0,0,8">
+                        <TextBlock x:Name="CaseGoalText" TextWrapping="Wrap" FontSize="11" Foreground="#2C5282"/>
+                    </Border>
+                    <ListBox x:Name="EventLogList" BorderThickness="0" Background="Transparent"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#F7FAFC" BorderBrush="#E2E8F0" BorderThickness="1"
+                                        CornerRadius="4" Padding="8,4" Margin="0,2">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding TimeStr}" FontSize="10" Foreground="#718096"/>
+                                        <TextBlock Text="{Binding Summary}" FontSize="12" TextWrapping="Wrap" Foreground="#2D3748"/>
+                                        <TextBlock Text="{Binding Warning}" FontSize="11" Foreground="#E53E3E"
+                                                   Visibility="{Binding WarningVisibility}"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </DockPanel>
+            </Border>
+
+            <!-- Right: Intervention Panel -->
+            <Border Grid.Column="1" Background="White" BorderBrush="#CBD5E0" BorderThickness="1" CornerRadius="6" Padding="12">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource SectionHeader}" Text="💉 Register Intervention"/>
+
+                        <TextBlock Text="Type" FontSize="11" Foreground="#718096" Margin="0,4,0,2"/>
+                        <ComboBox x:Name="InterventionTypeCombo" SelectionChanged="InterventionTypeCombo_Changed">
+                            <ComboBoxItem Content="Medication" IsSelected="True"/>
+                            <ComboBoxItem Content="Fluid"/>
+                            <ComboBoxItem Content="Other"/>
+                        </ComboBox>
+
+                        <!-- Medication fields -->
+                        <StackPanel x:Name="MedicationPanel">
+                            <TextBlock Text="Drug Name" FontSize="11" Foreground="#718096" Margin="0,6,0,2"/>
+                            <TextBox x:Name="DrugNameBox" Padding="6"/>
+                            <TextBlock Text="Dose" FontSize="11" Foreground="#718096" Margin="0,6,0,2"/>
+                            <TextBox x:Name="DoseBox" Padding="6"/>
+                            <TextBlock Text="Route" FontSize="11" Foreground="#718096" Margin="0,6,0,2"/>
+                            <ComboBox x:Name="RouteCombo">
+                                <ComboBoxItem Content="IV" IsSelected="True"/>
+                                <ComboBoxItem Content="PO"/>
+                                <ComboBoxItem Content="SC"/>
+                                <ComboBoxItem Content="IM"/>
+                                <ComboBoxItem Content="Inhaled"/>
+                                <ComboBoxItem Content="SL"/>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <!-- Fluid fields -->
+                        <StackPanel x:Name="FluidPanel" Visibility="Collapsed">
+                            <TextBlock Text="Fluid Type" FontSize="11" Foreground="#718096" Margin="0,6,0,2"/>
+                            <ComboBox x:Name="FluidTypeCombo">
+                                <ComboBoxItem Content="Normal Saline (0.9% NaCl)" IsSelected="True"/>
+                                <ComboBoxItem Content="Ringer's Lactate"/>
+                                <ComboBoxItem Content="5% Dextrose"/>
+                                <ComboBoxItem Content="Plasma"/>
+                                <ComboBoxItem Content="Blood"/>
+                            </ComboBox>
+                            <TextBlock Text="Volume (mL)" FontSize="11" Foreground="#718096" Margin="0,6,0,2"/>
+                            <TextBox x:Name="FluidVolumeBox" Padding="6"/>
+                        </StackPanel>
+
+                        <!-- Other fields -->
+                        <StackPanel x:Name="OtherPanel" Visibility="Collapsed">
+                            <TextBlock Text="Description" FontSize="11" Foreground="#718096" Margin="0,6,0,2"/>
+                            <TextBox x:Name="DescriptionBox" Padding="6" TextWrapping="Wrap" Height="60" AcceptsReturn="True"/>
+                            <TextBlock Text="Examples: Oxygen supplementation, Repositioning, Suctioning..." 
+                                       FontSize="10" Foreground="#A0AEC0" TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <!-- Warning area -->
+                        <Border x:Name="ValidationWarningBorder" Background="#FFF5F5" BorderBrush="#FC8181" BorderThickness="1"
+                                CornerRadius="4" Padding="8" Margin="0,8,0,0" Visibility="Collapsed">
+                            <TextBlock x:Name="ValidationWarningText" TextWrapping="Wrap" Foreground="#C53030" FontSize="11"/>
+                        </Border>
+
+                        <Button x:Name="RegisterBtn" Content="✓ Register Intervention" Style="{StaticResource ActionButton}"
+                                Margin="0,12,0,0" Padding="12,10" IsEnabled="False"
+                                Click="RegisterBtn_Click"/>
+
+                        <!-- Case Info -->
+                        <TextBlock Style="{StaticResource SectionHeader}" Text="ℹ️ Patient Info" Margin="0,16,0,4"/>
+                        <Border Background="#FFFBEB" BorderBrush="#F6E05E" BorderThickness="1" CornerRadius="4" Padding="8">
+                            <TextBlock x:Name="PatientDetailText" FontSize="11" TextWrapping="Wrap" Foreground="#744210"/>
+                        </Border>
+
+                        <TextBlock Style="{StaticResource SectionHeader}" Text="⚠️ Allergies &amp; Contraindications"/>
+                        <Border Background="#FFF5F5" BorderBrush="#FC8181" BorderThickness="1" CornerRadius="4" Padding="8">
+                            <TextBlock x:Name="AllergyText" FontSize="11" TextWrapping="Wrap" Foreground="#C53030"/>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

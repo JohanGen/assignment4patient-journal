@@ -1,0 +1,35 @@
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">🏥 Login – Patient Journal</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div asp-validation-summary="All" class="text-danger mb-2"></div>
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        <input name="username" class="form-control" required autofocus />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input name="password" type="password" class="form-control" required />
+                    </div>
+                    <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
+                </form>
+                <hr />
+                <p class="text-center mb-0">
+                    Don't have an account? <a asp-action="Register">Register</a>
+                </p>
+                <p class="text-muted text-center mt-2 small">
+                    Default: <strong>teacher / teacher123</strong> or <strong>student / student123</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

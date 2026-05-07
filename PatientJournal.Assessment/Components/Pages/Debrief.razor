@@ -1,0 +1,151 @@
+@page "/debrief"
+@rendermode InteractiveServer
+@using PatientJournal.Assessment.Services
+@using PatientJournal.Shared.DTOs
+@inject AssessmentApiService Api
+@inject IJSRuntime JS
+
+<PageTitle>Debrief Report</PageTitle>
+
+<h3>📊 Debrief Report</h3>
+
+@if (_report is null && !_loaded)
+{
+    <div class="mb-3" style="max-width:400px">
+        <label class="form-label">Session ID</label>
+        <div class="input-group">
+            <input type="number" class="form-control" @bind="_sessionId" placeholder="Enter session ID" />
+            <button class="btn btn-primary" @onclick="LoadReport">Load Report</button>
+        </div>
+    </div>
+    <a href="sessions" class="btn btn-outline-secondary">← Browse Sessions</a>
+}
+else if (_report is null && _loaded)
+{
+    <div class="alert alert-warning">No report found for session @_sessionId.</div>
+    <button class="btn btn-secondary" @onclick="() => { _loaded = false; }">← Back</button>
+}
+else if (_report is not null)
+{
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h5>@_report.Session.CaseTitle <small class="text-muted">Session #@_report.Session.SessionId</small></h5>
+            <small class="text-muted">
+                @_report.Session.StartedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm") →
+                @(_report.Session.EndedAt.HasValue ? _report.Session.EndedAt.Value.ToLocalTime().ToString("HH:mm") : "ongoing")
+            </small>
+        </div>
+        <div>
+            <button class="btn btn-outline-secondary btn-sm me-2" @onclick="() => { _report = null; _loaded = false; }">← Back</button>
+            <button class="btn btn-primary btn-sm" @onclick="PrintReport">🖨 Print</button>
+        </div>
+    </div>
+
+    <!-- Deviations Summary -->
+    @if (_report.Deviations.Any())
+    {
+        <div class="alert alert-danger">
+            <strong>⚠️ Clinical Deviations Detected (@_report.Deviations.Count)</strong>
+            <ul class="mb-0 mt-1">
+                @foreach (var d in _report.Deviations)
+                {
+                    <li>@d</li>
+                }
+            </ul>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-success">✅ No clinical deviations detected.</div>
+    }
+
+    <div class="row">
+        <!-- Timeline -->
+        <div class="col-md-7">
+            <div class="card mb-3">
+                <div class="card-header"><strong>📋 Complete Action Timeline</strong></div>
+                <div class="card-body p-0">
+                    <table class="table table-sm mb-0">
+                        <thead class="table-light">
+                            <tr><th>Time</th><th>Type</th><th>Details</th><th>Status</th></tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var i in _report.Interventions)
+                            {
+                                <tr class="@(i.WasValid ? "" : "table-danger")">
+                                    <td><small>@i.Timestamp.ToLocalTime().ToString("HH:mm:ss")</small></td>
+                                    <td><span class="badge bg-secondary">@i.Type</span></td>
+                                    <td>
+                                        <small>
+                                            @if (i.Type == "Medication") { @($"{i.DrugName} {i.Dose} {i.Route}") }
+                                            else if (i.Type == "Fluid") { @($"{i.FluidType} {i.FluidVolumeML}mL") }
+                                            else { @i.Description }
+                                        </small>
+                                    </td>
+                                    <td>
+                                        @if (!i.WasValid)
+                                        { <span class="badge bg-danger" title="@i.ValidationWarning">⚠️ @i.ValidationWarning</span> }
+                                        else
+                                        { <span class="badge bg-success">✓ Valid</span> }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Teacher Observations -->
+        <div class="col-md-5">
+            <div class="card mb-3">
+                <div class="card-header"><strong>📝 Teacher Observations</strong></div>
+                <div class="card-body p-0">
+                    @if (!_report.Observations.Any())
+                    {
+                        <p class="text-muted p-3 mb-0">No observations recorded.</p>
+                    }
+                    else
+                    {
+                        @foreach (var obs in _report.Observations)
+                        {
+                            <div class="px-3 py-2 border-bottom">
+                                <small class="text-muted fw-bold">@obs.Timestamp.ToLocalTime().ToString("HH:mm:ss")</small>
+                                <p class="mb-0 small">@obs.Note</p>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [SupplyParameterFromQuery]
+    public int? SessionId { get; set; }
+
+    private int _sessionId;
+    private DebriefReport? _report;
+    private bool _loaded;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (SessionId.HasValue)
+        {
+            _sessionId = SessionId.Value;
+            await LoadReport();
+        }
+    }
+
+    private async Task LoadReport()
+    {
+        _loaded = true;
+        _report = await Api.GetDebriefAsync(_sessionId);
+    }
+
+    private async Task PrintReport()
+    {
+        await JS.InvokeVoidAsync("print");
+    }
+}

@@ -1,0 +1,125 @@
+@using PatientJournal.Shared.Models
+@model SimulationCase
+@{
+    var medsText = string.Join("\n", Model.Medications.Select(m => $"{m.DrugName}|{m.Dosage}|{m.Route}|{m.Frequency}"));
+    var isTeacher = User.IsInRole("Teacher");
+}
+<div class="row">
+    <div class="col-md-6">
+        <h5 class="text-muted">Basic Info</h5>
+        <div class="mb-3">
+            <label class="form-label">Title *</label>
+            <input name="Title" value="@Model.Title" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea name="Description" class="form-control" rows="2">@Model.Description</textarea>
+        </div>
+        @if (isTeacher)
+        {
+            <div class="mb-3 form-check">
+                <input name="IsTeacherOnly" type="checkbox" class="form-check-input" value="true"
+                       @(Model.IsTeacherOnly ? "checked" : "") id="teacherOnly" />
+                <label class="form-check-label" for="teacherOnly">Teacher-only case (pre-made)</label>
+            </div>
+        }
+        <h5 class="text-muted mt-3">Patient Demographics</h5>
+        <div class="mb-3">
+            <label class="form-label">Patient Name *</label>
+            <input name="PatientName" value="@Model.PatientName" class="form-control" required />
+        </div>
+        <div class="row">
+            <div class="col mb-3">
+                <label class="form-label">Age</label>
+                <input name="PatientAge" type="number" value="@Model.PatientAge" class="form-control" min="0" max="130" />
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Sex</label>
+                <select name="PatientSex" class="form-select">
+                    @{
+                        var sexOptions = new[] { "Male", "Female", "Other" };
+                        foreach (var s in sexOptions)
+                        {
+                            if (s == Model.PatientSex)
+                            { <option value="@s" selected>@s</option> }
+                            else
+                            { <option value="@s">@s</option> }
+                        }
+                    }
+                </select>
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Weight (kg)</label>
+                <input name="PatientWeightKg" type="number" step="0.1" value="@Model.PatientWeightKg" class="form-control" />
+            </div>
+        </div>
+        <h5 class="text-muted mt-3">Starting Vitals</h5>
+        <div class="row">
+            <div class="col mb-3">
+                <label class="form-label">Systolic BP</label>
+                <input name="InitialSystolicBP" type="number" value="@Model.InitialSystolicBP" class="form-control" />
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Diastolic BP</label>
+                <input name="InitialDiastolicBP" type="number" value="@Model.InitialDiastolicBP" class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mb-3">
+                <label class="form-label">Heart Rate</label>
+                <input name="InitialHeartRate" type="number" value="@Model.InitialHeartRate" class="form-control" />
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Resp. Rate</label>
+                <input name="InitialRespiratoryRate" type="number" value="@Model.InitialRespiratoryRate" class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mb-3">
+                <label class="form-label">SpO₂ (%)</label>
+                <input name="InitialOxygenSaturation" type="number" step="0.1" value="@Model.InitialOxygenSaturation" class="form-control" />
+            </div>
+            <div class="col mb-3">
+                <label class="form-label">Temperature (°C)</label>
+                <input name="InitialTemperatureCelsius" type="number" step="0.1" value="@Model.InitialTemperatureCelsius" class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h5 class="text-muted">Clinical Info</h5>
+        <div class="mb-3">
+            <label class="form-label">Medical History</label>
+            <textarea name="MedicalHistory" class="form-control" rows="3">@Model.MedicalHistory</textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Current Diagnoses</label>
+            <textarea name="CurrentDiagnoses" class="form-control" rows="2">@Model.CurrentDiagnoses</textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Allergies <small class="text-muted">(comma-separated, e.g. penicillin, aspirin)</small></label>
+            <input name="Allergies" value="@Model.Allergies" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Contraindications <small class="text-muted">(comma-separated)</small></label>
+            <input name="Contraindications" value="@Model.Contraindications" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Lab Values</label>
+            <textarea name="LabValues" class="form-control" rows="2">@Model.LabValues</textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Goals</label>
+            <textarea name="Goals" class="form-control" rows="2">@Model.Goals</textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Goal Timer (minutes)</label>
+            <input name="GoalTimerMinutes" type="number" value="@Model.GoalTimerMinutes" class="form-control" min="1" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Current Medications</label>
+            <small class="text-muted d-block mb-1">One per line: DrugName|Dosage|Route|Frequency</small>
+            <textarea name="medications" class="form-control font-monospace" rows="5"
+                      placeholder="Metoprolol|50mg|PO|Daily">@medsText</textarea>
+        </div>
+    </div>
+</div>

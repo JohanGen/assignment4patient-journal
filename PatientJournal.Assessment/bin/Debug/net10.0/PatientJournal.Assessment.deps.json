@@ -1,0 +1,89 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "PatientJournal.Assessment/1.0.0": {
+        "dependencies": {
+          "Microsoft.AspNetCore.SignalR.Client": "10.0.7",
+          "PatientJournal.Shared": "1.0.0"
+        },
+        "runtime": {
+          "PatientJournal.Assessment.dll": {}
+        }
+      },
+      "Microsoft.AspNetCore.Http.Connections.Client/10.0.7": {
+        "runtime": {
+          "lib/net10.0/Microsoft.AspNetCore.Http.Connections.Client.dll": {
+            "assemblyVersion": "10.0.7.0",
+            "fileVersion": "10.0.726.21808"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.SignalR.Client/10.0.7": {
+        "dependencies": {
+          "Microsoft.AspNetCore.Http.Connections.Client": "10.0.7",
+          "Microsoft.AspNetCore.SignalR.Client.Core": "10.0.7"
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.AspNetCore.SignalR.Client.dll": {
+            "assemblyVersion": "10.0.7.0",
+            "fileVersion": "10.0.726.21808"
+          }
+        }
+      },
+      "Microsoft.AspNetCore.SignalR.Client.Core/10.0.7": {
+        "runtime": {
+          "lib/net10.0/Microsoft.AspNetCore.SignalR.Client.Core.dll": {
+            "assemblyVersion": "10.0.7.0",
+            "fileVersion": "10.0.726.21808"
+          }
+        }
+      },
+      "PatientJournal.Shared/1.0.0": {
+        "runtime": {
+          "PatientJournal.Shared.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "PatientJournal.Assessment/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.AspNetCore.Http.Connections.Client/10.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-oZzsyHxPfwJg9xLrIow1HRe6Y2w1/ylRKJLbCvePVNZgy/2WeYDk68V+Z20zzs6gXNQS3UjbbdsQai3/ih/CeA==",
+      "path": "microsoft.aspnetcore.http.connections.client/10.0.7",
+      "hashPath": "microsoft.aspnetcore.http.connections.client.10.0.7.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.SignalR.Client/10.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-P0vOQH/vHTpRBjsqK21CV+JDcppN4+80nhcNhKT61YA2DturJGC5wuQnRVKvMtbi7wW7QNbtpo8+KA+cnE/HQw==",
+      "path": "microsoft.aspnetcore.signalr.client/10.0.7",
+      "hashPath": "microsoft.aspnetcore.signalr.client.10.0.7.nupkg.sha512"
+    },
+    "Microsoft.AspNetCore.SignalR.Client.Core/10.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-zItZbjPjkhViHO9cxf0QMlXKHESgoIMcH1yPnlkfC2NVdcyxmcQ8aKdV6LSn4+v1rEiRZgALxSNT9fPwYlCtcA==",
+      "path": "microsoft.aspnetcore.signalr.client.core/10.0.7",
+      "hashPath": "microsoft.aspnetcore.signalr.client.core.10.0.7.nupkg.sha512"
+    },
+    "PatientJournal.Shared/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

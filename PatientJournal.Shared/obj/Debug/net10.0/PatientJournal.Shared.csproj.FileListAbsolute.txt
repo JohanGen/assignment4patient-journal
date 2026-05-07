@@ -1,0 +1,12 @@
+C:\Users\johan\source\repos\PatientJournal\PatientJournal.Shared\bin\Debug\net10.0\PatientJournal.Shared.deps.json
+C:\Users\johan\source\repos\PatientJournal\PatientJournal.Shared\bin\Debug\net10.0\PatientJournal.Shared.dll
+C:\Users\johan\source\repos\PatientJournal\PatientJournal.Shared\bin\Debug\net10.0\PatientJournal.Shared.pdb
+C:\Users\johan\source\repos\PatientJournal\PatientJournal.Shared\obj\Debug\net10.0\PatientJournal.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\johan\source\repos\PatientJournal\PatientJournal.Shared\obj\Debug\net10.0\PatientJournal.Shared.AssemblyInfoInputs.cache
+C:\Users\johan\source\repos\PatientJournal\PatientJournal.Shared\obj\Debug\net10.0\PatientJournal.Shared.AssemblyInfo.cs
+C:\Users\johan\source\repos\PatientJournal\PatientJournal.Shared\obj\Debug\net10.0\PatientJournal.Shared.csproj.CoreCompileInputs.cache
+C:\Users\johan\source\repos\PatientJournal\PatientJournal.Shared\obj\Debug\net10.0\PatientJournal.Shared.sourcelink.json
+C:\Users\johan\source\repos\PatientJournal\PatientJournal.Shared\obj\Debug\net10.0\PatientJournal.Shared.dll
+C:\Users\johan\source\repos\PatientJournal\PatientJournal.Shared\obj\Debug\net10.0\refint\PatientJournal.Shared.dll
+C:\Users\johan\source\repos\PatientJournal\PatientJournal.Shared\obj\Debug\net10.0\PatientJournal.Shared.pdb
+C:\Users\johan\source\repos\PatientJournal\PatientJournal.Shared\obj\Debug\net10.0\ref\PatientJournal.Shared.dll

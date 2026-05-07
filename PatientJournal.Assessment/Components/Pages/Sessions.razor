@@ -1,0 +1,57 @@
+@page "/sessions"
+@rendermode InteractiveServer
+@using PatientJournal.Assessment.Services
+@using PatientJournal.Shared.DTOs
+@inject AssessmentApiService Api
+
+<PageTitle>All Sessions</PageTitle>
+
+<h3>📅 All Simulation Sessions</h3>
+
+@if (_sessions is null)
+{
+    <p>Loading...</p>
+}
+else if (!_sessions.Any())
+{
+    <div class="alert alert-info">No sessions recorded yet.</div>
+}
+else
+{
+    <table class="table table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>#</th><th>Case</th><th>Started</th><th>Ended</th><th>Status</th><th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var s in _sessions)
+            {
+                <tr>
+                    <td>@s.SessionId</td>
+                    <td>@s.CaseTitle</td>
+                    <td>@s.StartedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</td>
+                    <td>@(s.EndedAt.HasValue ? s.EndedAt.Value.ToLocalTime().ToString("HH:mm") : "-")</td>
+                    <td>
+                        @if (s.IsActive)
+                        { <span class="badge bg-success">Active</span> }
+                        else
+                        { <span class="badge bg-secondary">Ended</span> }
+                    </td>
+                    <td>
+                        <a href="debrief?sessionId=@s.SessionId" class="btn btn-sm btn-outline-primary">Debrief</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<SessionSummaryDto>? _sessions;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _sessions = await Api.GetSessionsAsync();
+    }
+}

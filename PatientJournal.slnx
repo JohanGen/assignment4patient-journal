@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="PatientJournal.API/PatientJournal.API.csproj" />
+  <Project Path="PatientJournal.Assessment/PatientJournal.Assessment.csproj" />
+  <Project Path="PatientJournal.Desktop/PatientJournal.Desktop.csproj" />
+  <Project Path="PatientJournal.Shared/PatientJournal.Shared.csproj" />
+  <Project Path="PatientJournal.Web/PatientJournal.Web.csproj" />
+</Solution>

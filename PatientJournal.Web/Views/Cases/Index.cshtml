@@ -1,0 +1,74 @@
+@using PatientJournal.Shared.DTOs
+@model List<CaseListItem>
+@{
+    ViewData["Title"] = "Simulation Cases";
+    var isTeacher = User.IsInRole("Teacher");
+}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Simulation Cases</h2>
+    @if (isTeacher)
+    {
+        <a asp-action="Create" class="btn btn-success">+ New Case</a>
+    }
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No cases available.</div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+        @foreach (var c in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm @(c.IsActive ? "border-success" : "")">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <strong>@c.Title</strong>
+                        <span>
+                            @if (c.IsActive)
+                            {
+                                <span class="badge bg-success">Active</span>
+                            }
+                            @if (c.IsTeacherOnly)
+                            {
+                                <span class="badge bg-secondary ms-1">Teacher</span>
+                            }
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">
+                            <strong>Patient:</strong> @c.PatientName, @c.PatientAge yrs
+                        </p>
+                    </div>
+                    <div class="card-footer d-flex gap-1 flex-wrap">
+                        <a asp-action="Details" asp-route-id="@c.Id" class="btn btn-sm btn-outline-primary">View</a>
+                        @if (isTeacher || !c.IsTeacherOnly)
+                        {
+                            <a asp-action="Edit" asp-route-id="@c.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        }
+                        @if (isTeacher)
+                        {
+                            @if (!c.IsActive)
+                            {
+                                <form asp-action="Activate" asp-route-id="@c.Id" method="post" class="d-inline">
+                                    <button class="btn btn-sm btn-success">Activate</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form asp-action="Deactivate" asp-route-id="@c.Id" method="post" class="d-inline">
+                                    <button class="btn btn-sm btn-warning">Deactivate</button>
+                                </form>
+                            }
+                            <form asp-action="Delete" asp-route-id="@c.Id" method="post" class="d-inline"
+                                  onsubmit="return confirm('Delete this case?')">
+                                <button class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

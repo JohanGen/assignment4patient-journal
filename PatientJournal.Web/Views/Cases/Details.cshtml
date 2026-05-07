@@ -1,0 +1,88 @@
+@using PatientJournal.Shared.Models
+@model SimulationCase
+@{
+    ViewData["Title"] = "Case Details";
+}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>@Model.Title</h2>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-secondary">Edit</a>
+        <a asp-action="Index" class="btn btn-outline-secondary ms-1">Back</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-header bg-light"><strong>👤 Patient Demographics</strong></div>
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">Name</dt><dd class="col-sm-8">@Model.PatientName</dd>
+                    <dt class="col-sm-4">Age</dt><dd class="col-sm-8">@Model.PatientAge years</dd>
+                    <dt class="col-sm-4">Sex</dt><dd class="col-sm-8">@Model.PatientSex</dd>
+                    <dt class="col-sm-4">Weight</dt><dd class="col-sm-8">@Model.PatientWeightKg kg</dd>
+                </dl>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header bg-light"><strong>🩺 Starting Vitals</strong></div>
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">Blood Pressure</dt><dd class="col-sm-8">@Model.InitialSystolicBP/@Model.InitialDiastolicBP mmHg</dd>
+                    <dt class="col-sm-4">Heart Rate</dt><dd class="col-sm-8">@Model.InitialHeartRate bpm</dd>
+                    <dt class="col-sm-4">Resp. Rate</dt><dd class="col-sm-8">@Model.InitialRespiratoryRate /min</dd>
+                    <dt class="col-sm-4">SpO₂</dt><dd class="col-sm-8">@Model.InitialOxygenSaturation%</dd>
+                    <dt class="col-sm-4">Temperature</dt><dd class="col-sm-8">@Model.InitialTemperatureCelsius °C</dd>
+                </dl>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header bg-light"><strong>💊 Current Medications</strong></div>
+            <div class="card-body">
+                @if (Model.Medications.Any())
+                {
+                    <table class="table table-sm mb-0">
+                        <thead><tr><th>Drug</th><th>Dose</th><th>Route</th><th>Frequency</th></tr></thead>
+                        <tbody>
+                            @foreach (var med in Model.Medications)
+                            {
+                                <tr>
+                                    <td>@med.DrugName</td>
+                                    <td>@med.Dosage</td>
+                                    <td>@med.Route</td>
+                                    <td>@med.Frequency</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else { <p class="text-muted mb-0">None</p> }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-header bg-light"><strong>📋 Medical History</strong></div>
+            <div class="card-body"><p class="mb-0">@Model.MedicalHistory</p></div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header bg-light"><strong>🔬 Diagnoses</strong></div>
+            <div class="card-body"><p class="mb-0">@Model.CurrentDiagnoses</p></div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header bg-warning"><strong>⚠️ Allergies & Contraindications</strong></div>
+            <div class="card-body">
+                <p class="mb-1"><strong>Allergies:</strong> @(string.IsNullOrWhiteSpace(Model.Allergies) ? "None" : Model.Allergies)</p>
+                <p class="mb-0"><strong>Contraindications:</strong> @(string.IsNullOrWhiteSpace(Model.Contraindications) ? "None" : Model.Contraindications)</p>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header bg-light"><strong>🧪 Lab Values</strong></div>
+            <div class="card-body"><p class="mb-0">@Model.LabValues</p></div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-header bg-info text-white"><strong>🎯 Goals (Timer: @Model.GoalTimerMinutes min)</strong></div>
+            <div class="card-body"><p class="mb-0">@Model.Goals</p></div>
+        </div>
+    </div>
+</div>

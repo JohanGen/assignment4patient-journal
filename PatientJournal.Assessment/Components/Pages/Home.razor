@@ -1,0 +1,245 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@using PatientJournal.Assessment.Services
+@using PatientJournal.Shared.DTOs
+@using PatientJournal.Shared.Models
+@inject AssessmentApiService Api
+@inject SignalRService SignalR
+@implements IAsyncDisposable
+
+<PageTitle>Live Session – Teacher Assessment</PageTitle>
+
+<h3>📡 Live Session Monitor</h3>
+
+@if (_session is null)
+{
+    <div class="alert alert-warning">
+        <strong>No active session found.</strong>
+        <p>Activate a case in the Web App, or start a session here.</p>
+    </div>
+
+    @if (_cases.Any())
+    {
+        <div class="card mb-3" style="max-width:500px">
+            <div class="card-header">Start New Session</div>
+            <div class="card-body">
+                <label class="form-label">Select Case</label>
+                <select class="form-select mb-2" @onchange="e => _selectedCaseId = int.Parse(e.Value!.ToString()!)">
+                    @foreach (var c in _cases)
+                    {
+                        <option value="@c.Id">@c.Title – @c.PatientName</option>
+                    }
+                </select>
+                @if (!string.IsNullOrEmpty(_statusMessage))
+                {
+                    <div class="alert alert-info py-1 mb-2">@_statusMessage</div>
+                }
+                <button class="btn btn-success" @onclick="StartSession">▶ Start Session</button>
+            </div>
+        </div>
+    }
+
+    <button class="btn btn-primary" @onclick="LoadSession">🔄 Check for Active Session</button>
+}
+else
+{
+    <div class="row mb-3">
+        <div class="col">
+            <div class="card border-success">
+                <div class="card-header bg-success text-white d-flex justify-content-between">
+                    <span>🟢 Active: @_session.SimulationCase?.Title</span>
+                    <span>Session #@_session.Id | Started @_session.StartedAt.ToLocalTime().ToString("HH:mm:ss")</span>
+                </div>
+                <div class="card-body py-2">
+                    <small class="text-muted">
+                        Patient: <strong>@_session.SimulationCase?.PatientName</strong> |
+                        @_session.SimulationCase?.PatientAge yrs |
+                        @_session.SimulationCase?.PatientSex
+                    </small>
+                    @if (_session.SimulationCase?.Goals is not null)
+                    {
+                        <div class="mt-1"><small>🎯 <em>@_session.SimulationCase.Goals</em></small></div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <strong>📋 Student Actions (@_interventions.Count)</strong>
+                    <button class="btn btn-sm btn-outline-secondary" @onclick="Refresh">🔄</button>
+                </div>
+                <div class="card-body p-0" style="max-height:450px;overflow-y:auto">
+                    @if (!_interventions.Any())
+                    {
+                        <p class="text-muted p-3 mb-0">No interventions registered yet.</p>
+                    }
+                    else
+                    {
+                        <table class="table table-sm table-hover mb-0">
+                            <thead class="table-light sticky-top">
+                                <tr><th>Time</th><th>Type</th><th>Details</th><th>Status</th></tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var i in _interventions.OrderByDescending(x => x.Timestamp))
+                                {
+                                    <tr class="@(i.WasValid ? "" : "table-danger")">
+                                        <td class="text-nowrap"><small>@i.Timestamp.ToLocalTime().ToString("HH:mm:ss")</small></td>
+                                        <td><span class="badge bg-secondary">@i.Type</span></td>
+                                        <td>
+                                            <small>
+                                                @if (i.Type == "Medication") { @($"{i.DrugName} {i.Dose} {i.Route}") }
+                                                else if (i.Type == "Fluid") { @($"{i.FluidType} {i.FluidVolumeML}mL") }
+                                                else { @i.Description }
+                                            </small>
+                                        </td>
+                                        <td>
+                                            @if (!i.WasValid)
+                                            { <span class="badge bg-danger" title="@i.ValidationWarning">⚠️ Violation</span> }
+                                            else
+                                            { <span class="badge bg-success">✓</span> }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card mb-3">
+                <div class="card-header"><strong>📝 Teacher Observations</strong></div>
+                <div class="card-body">
+                    <textarea class="form-control mb-2" rows="2" placeholder="Add observation..."
+                              @bind="_newObservation"></textarea>
+                    <button class="btn btn-primary btn-sm w-100" @onclick="AddObservation"
+                            disabled="@(string.IsNullOrWhiteSpace(_newObservation))">
+                        + Add Timestamped Observation
+                    </button>
+                </div>
+                <div class="card-body p-0" style="max-height:300px;overflow-y:auto">
+                    @foreach (var obs in _observations.OrderByDescending(o => o.Timestamp))
+                    {
+                        <div class="px-3 py-2 border-bottom">
+                            <small class="text-muted">@obs.Timestamp.ToLocalTime().ToString("HH:mm:ss")</small>
+                            <p class="mb-0 small">@obs.Note</p>
+                        </div>
+                    }
+                </div>
+            </div>
+            <button class="btn btn-danger btn-sm" @onclick="EndSession">⏹ End Session</button>
+            <a class="btn btn-outline-primary btn-sm ms-2" href="debrief?sessionId=@_session.Id">View Debrief →</a>
+        </div>
+    </div>
+}
+
+@code {
+    private SimulationSession? _session;
+    private List<InterventionDto> _interventions = new();
+    private List<TeacherObservationDto> _observations = new();
+    private List<CaseListItem> _cases = new();
+    private string _newObservation = "";
+    private int _selectedCaseId;
+    private string _statusMessage = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        _cases = await Api.GetCasesAsync();
+        if (_cases.Any()) _selectedCaseId = _cases.First().Id;
+        await LoadSession();
+    }
+
+    private async Task LoadSession()
+    {
+        _statusMessage = "";
+        _session = await Api.GetActiveSessionAsync();
+        if (_session is not null)
+        {
+            _interventions = await Api.GetInterventionsAsync(_session.Id);
+            _observations = await Api.GetObservationsAsync(_session.Id);
+            try
+            {
+                SignalR.OnInterventionRegistered -= OnIntervention;
+                SignalR.OnObservationAdded -= OnObservation;
+                SignalR.OnSessionEnded -= OnSessionEnded;
+                await SignalR.JoinSessionAsync(_session.Id);
+                SignalR.OnInterventionRegistered += OnIntervention;
+                SignalR.OnObservationAdded += OnObservation;
+                SignalR.OnSessionEnded += OnSessionEnded;
+            }
+            catch
+            {
+                // SignalR failure is non-fatal; polling/refresh still works
+            }
+        }
+        StateHasChanged();
+    }
+
+    private async Task StartSession()
+    {
+        _statusMessage = "Starting session...";
+        StateHasChanged();
+        var result = await Api.StartSessionAsync(_selectedCaseId);
+        if (result is null)
+        {
+            _statusMessage = "❌ Failed to start session. Is the API running?";
+            StateHasChanged();
+            return;
+        }
+        await LoadSession();
+    }
+
+    private async Task Refresh()
+    {
+        if (_session is null) return;
+        _interventions = await Api.GetInterventionsAsync(_session.Id);
+        _observations = await Api.GetObservationsAsync(_session.Id);
+    }
+
+    private async Task AddObservation()
+    {
+        if (_session is null || string.IsNullOrWhiteSpace(_newObservation)) return;
+        var obs = await Api.AddObservationAsync(_session.Id, _newObservation);
+        if (obs is not null) _observations.Add(obs);
+        _newObservation = "";
+    }
+
+    private async Task EndSession()
+    {
+        if (_session is null) return;
+        await Api.EndSessionAsync(_session.Id);
+        _session = null;
+        _interventions.Clear();
+        _observations.Clear();
+    }
+
+    private void OnIntervention(InterventionDto dto)
+    {
+        _interventions.Add(dto);
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void OnObservation(TeacherObservationDto dto)
+    {
+        _observations.Add(dto);
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void OnSessionEnded(int id)
+    {
+        _session = null;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        SignalR.OnInterventionRegistered -= OnIntervention;
+        SignalR.OnObservationAdded -= OnObservation;
+        SignalR.OnSessionEnded -= OnSessionEnded;
+    }
+}
