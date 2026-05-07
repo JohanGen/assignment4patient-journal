@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\johan\\source\\repos\\PatientJournal\\PatientJournal.Shared\\PatientJournal.Shared.csproj",
+      "projectUniqueName": "C:\\Users\\johan\\Documents\\DAT154\\assigntment_4\\PatientJournal.Shared\\PatientJournal.Shared.csproj",
       "projectName": "PatientJournal.Shared",
-      "projectPath": "C:\\Users\\johan\\source\\repos\\PatientJournal\\PatientJournal.Shared\\PatientJournal.Shared.csproj",
+      "projectPath": "C:\\Users\\johan\\Documents\\DAT154\\assigntment_4\\PatientJournal.Shared\\PatientJournal.Shared.csproj",
       "packagesPath": "C:\\Users\\johan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\johan\\source\\repos\\PatientJournal\\PatientJournal.Shared\\obj\\",
+      "outputPath": "C:\\Users\\johan\\Documents\\DAT154\\assigntment_4\\PatientJournal.Shared\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -52,7 +52,7 @@
         "auditLevel": "low",
         "auditMode": "all"
       },
-      "SdkAnalysisLevel": "10.0.200"
+      "SdkAnalysisLevel": "10.0.100"
     },
     "frameworks": {
       "net10.0": {
@@ -73,7 +73,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

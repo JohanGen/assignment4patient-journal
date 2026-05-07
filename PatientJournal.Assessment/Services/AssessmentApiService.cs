@@ -64,6 +64,6 @@ public class AssessmentApiService
     public async Task<List<CaseListItem>> GetCasesAsync()
     {
         var result = await _http.GetFromJsonAsync<List<CaseListItem>>("api/cases");
-        return result ?? new();
+        return result?.Where(c => c.IsActive).ToList() ?? new();
     }
 }

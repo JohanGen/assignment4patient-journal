@@ -27,6 +27,7 @@ public class SessionsController : ControllerBase
     {
         var simCase = await _db.Cases.Include(c => c.Medications).FirstOrDefaultAsync(c => c.Id == caseId);
         if (simCase is null) return NotFound(new { message = "Case not found." });
+        if (!simCase.IsActive) return BadRequest(new { message = "Case is not active. A teacher must activate it first." });
 
         // End any currently active sessions before starting a new one
         var activeSessions = await _db.Sessions.Where(s => s.IsActive).ToListAsync();

@@ -112,11 +112,7 @@ public class CasesController : ControllerBase
     {
         if (role != "Teacher") return Forbid();
 
-        // Deactivate all others
-        var allCases = await _db.Cases.ToListAsync();
-        foreach (var c in allCases) c.IsActive = false;
-
-        var target = allCases.FirstOrDefault(c => c.Id == id);
+        var target = await _db.Cases.FindAsync(id);
         if (target is null) return NotFound();
         target.IsActive = true;
 

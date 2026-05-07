@@ -187,7 +187,7 @@ else
         var result = await Api.StartSessionAsync(_selectedCaseId);
         if (result is null)
         {
-            _statusMessage = "❌ Failed to start session. Is the API running?";
+            _statusMessage = "Failed to start session.";
             StateHasChanged();
             return;
         }
@@ -204,8 +204,7 @@ else
     private async Task AddObservation()
     {
         if (_session is null || string.IsNullOrWhiteSpace(_newObservation)) return;
-        var obs = await Api.AddObservationAsync(_session.Id, _newObservation);
-        if (obs is not null) _observations.Add(obs);
+        await Api.AddObservationAsync(_session.Id, _newObservation);
         _newObservation = "";
     }
 
