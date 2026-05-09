@@ -22,3 +22,15 @@ C:\Users\johan\Documents\DAT154\assigntment_4\PatientJournal.Shared\obj\Debug\ne
 C:\Users\johan\Documents\DAT154\assigntment_4\PatientJournal.Shared\obj\Debug\net10.0\refint\PatientJournal.Shared.dll
 C:\Users\johan\Documents\DAT154\assigntment_4\PatientJournal.Shared\obj\Debug\net10.0\PatientJournal.Shared.pdb
 C:\Users\johan\Documents\DAT154\assigntment_4\PatientJournal.Shared\obj\Debug\net10.0\ref\PatientJournal.Shared.dll
+C:\Users\johan\Documents\DAT154\assignment_4\PatientJournal.Shared\bin\Debug\net10.0\PatientJournal.Shared.deps.json
+C:\Users\johan\Documents\DAT154\assignment_4\PatientJournal.Shared\bin\Debug\net10.0\PatientJournal.Shared.dll
+C:\Users\johan\Documents\DAT154\assignment_4\PatientJournal.Shared\bin\Debug\net10.0\PatientJournal.Shared.pdb
+C:\Users\johan\Documents\DAT154\assignment_4\PatientJournal.Shared\obj\Debug\net10.0\PatientJournal.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\johan\Documents\DAT154\assignment_4\PatientJournal.Shared\obj\Debug\net10.0\PatientJournal.Shared.AssemblyInfoInputs.cache
+C:\Users\johan\Documents\DAT154\assignment_4\PatientJournal.Shared\obj\Debug\net10.0\PatientJournal.Shared.AssemblyInfo.cs
+C:\Users\johan\Documents\DAT154\assignment_4\PatientJournal.Shared\obj\Debug\net10.0\PatientJournal.Shared.csproj.CoreCompileInputs.cache
+C:\Users\johan\Documents\DAT154\assignment_4\PatientJournal.Shared\obj\Debug\net10.0\PatientJournal.Shared.sourcelink.json
+C:\Users\johan\Documents\DAT154\assignment_4\PatientJournal.Shared\obj\Debug\net10.0\PatientJournal.Shared.dll
+C:\Users\johan\Documents\DAT154\assignment_4\PatientJournal.Shared\obj\Debug\net10.0\refint\PatientJournal.Shared.dll
+C:\Users\johan\Documents\DAT154\assignment_4\PatientJournal.Shared\obj\Debug\net10.0\PatientJournal.Shared.pdb
+C:\Users\johan\Documents\DAT154\assignment_4\PatientJournal.Shared\obj\Debug\net10.0\ref\PatientJournal.Shared.dll

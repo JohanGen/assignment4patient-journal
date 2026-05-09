@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "bmuhMHDr1DI=",
+  "dgSpecHash": "jAbHJOiP8Y4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\johan\\Documents\\DAT154\\assigntment_4\\PatientJournal.API\\PatientJournal.API.csproj",
+  "projectFilePath": "C:\\Users\\johan\\Documents\\DAT154\\assignment_4\\PatientJournal.API\\PatientJournal.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\johan\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\johan\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",
@@ -60,9 +60,9 @@
       "code": "NU1510",
       "level": "Warning",
       "message": "PackageReference Microsoft.AspNetCore.SignalR will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
-      "projectPath": "C:\\Users\\johan\\Documents\\DAT154\\assigntment_4\\PatientJournal.API\\PatientJournal.API.csproj",
+      "projectPath": "C:\\Users\\johan\\Documents\\DAT154\\assignment_4\\PatientJournal.API\\PatientJournal.API.csproj",
       "warningLevel": 1,
-      "filePath": "C:\\Users\\johan\\Documents\\DAT154\\assigntment_4\\PatientJournal.API\\PatientJournal.API.csproj",
+      "filePath": "C:\\Users\\johan\\Documents\\DAT154\\assignment_4\\PatientJournal.API\\PatientJournal.API.csproj",
       "libraryId": "Microsoft.AspNetCore.SignalR",
       "targetGraphs": [
         "net10.0"

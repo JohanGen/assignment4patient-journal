@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "AyJ5ywYEfq0=",
+  "dgSpecHash": "IemVuPSj82U=",
   "success": true,
-  "projectFilePath": "C:\\Users\\johan\\Documents\\DAT154\\assigntment_4\\PatientJournal.Web\\PatientJournal.Web.csproj",
+  "projectFilePath": "C:\\Users\\johan\\Documents\\DAT154\\assignment_4\\PatientJournal.Web\\PatientJournal.Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\johan\\.nuget\\packages\\microsoft.aspnetcore.authentication.cookies\\2.3.9\\microsoft.aspnetcore.authentication.cookies.2.3.9.nupkg.sha512"
   ],
@@ -11,9 +11,9 @@
       "code": "NU1510",
       "level": "Warning",
       "message": "PackageReference Microsoft.AspNetCore.Authentication.Cookies will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",
-      "projectPath": "C:\\Users\\johan\\Documents\\DAT154\\assigntment_4\\PatientJournal.Web\\PatientJournal.Web.csproj",
+      "projectPath": "C:\\Users\\johan\\Documents\\DAT154\\assignment_4\\PatientJournal.Web\\PatientJournal.Web.csproj",
       "warningLevel": 1,
-      "filePath": "C:\\Users\\johan\\Documents\\DAT154\\assigntment_4\\PatientJournal.Web\\PatientJournal.Web.csproj",
+      "filePath": "C:\\Users\\johan\\Documents\\DAT154\\assignment_4\\PatientJournal.Web\\PatientJournal.Web.csproj",
       "libraryId": "Microsoft.AspNetCore.Authentication.Cookies",
       "targetGraphs": [
         "net10.0"

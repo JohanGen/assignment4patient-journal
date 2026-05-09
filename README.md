@@ -90,32 +90,6 @@ Click **"Load Active Session"** to fetch the currently active case/session. Then
 
 ---
 
-## Project Structure
-
-```
-PatientJournal/
-├── PatientJournal.Shared/          # Class library
-│   ├── Models/                     # Domain entities (EF Core)
-│   ├── DTOs/                       # Request/response objects
-│   └── Services/PhysiologyEngine   # Rule-based vital simulation
-├── PatientJournal.API/             # ASP.NET Core Web API
-│   ├── Controllers/                # Auth, Cases, Sessions
-│   ├── Data/AppDbContext           # EF Core DbContext + seeding
-│   └── Hubs/SimulationHub          # SignalR hub
-├── PatientJournal.Web/             # ASP.NET Core MVC (App 1)
-│   ├── Controllers/                # Account, Cases
-│   ├── Services/ApiService         # HTTP client wrapper
-│   └── Views/                      # Razor views
-├── PatientJournal.Desktop/         # WPF (App 2)
-│   ├── Services/ApiService         # HTTP client wrapper
-│   └── MainWindow.xaml/cs          # Full simulation UI
-└── PatientJournal.Assessment/      # Blazor Server (App 3)
-    ├── Services/                   # API + SignalR services
-    └── Components/Pages/           # Home (live), Sessions, Debrief
-```
-
----
-
 ## Potentially Unimplemented Features (Architecture Supports Extension)
 
 - **Vital sign chart**: The `VitalReading` history is stored and returned by the API. A WPF `Canvas`/`OxyPlot` chart can be added to the Desktop app without API changes.

@@ -7,7 +7,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 var apiBase = builder.Configuration["ApiBaseUrl"] ?? "http://localhost:5200";
-builder.Services.AddHttpClient<AssessmentApiService>(client =>
+builder.Services.AddHttpClient<ApiService>(client =>
     client.BaseAddress = new Uri(apiBase));
 builder.Services.AddSingleton(sp =>
     new SignalRService(apiBase));

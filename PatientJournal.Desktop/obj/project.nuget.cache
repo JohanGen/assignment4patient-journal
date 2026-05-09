@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "GRHmgBOZ3RA=",
+  "dgSpecHash": "kVszdIMctCM=",
   "success": true,
-  "projectFilePath": "C:\\Users\\johan\\Documents\\DAT154\\assigntment_4\\PatientJournal.Desktop\\PatientJournal.Desktop.csproj",
+  "projectFilePath": "C:\\Users\\johan\\Documents\\DAT154\\assignment_4\\PatientJournal.Desktop\\PatientJournal.Desktop.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\johan\\.nuget\\packages\\microsoft.aspnetcore.connections.abstractions\\10.0.7\\microsoft.aspnetcore.connections.abstractions.10.0.7.nupkg.sha512",
     "C:\\Users\\johan\\.nuget\\packages\\microsoft.aspnetcore.http.connections.client\\10.0.7\\microsoft.aspnetcore.http.connections.client.10.0.7.nupkg.sha512",

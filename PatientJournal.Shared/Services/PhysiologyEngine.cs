@@ -27,7 +27,7 @@ public static class PhysiologyEngine
         }
         else if (intervention.Type == InterventionType.Other && intervention.Description is not null)
         {
-            var desc = intervention.Description.ToLower();
+            var desc = intervention.Description.ToLower().Trim();
             if (desc.Contains("oxygen") || desc.Contains("o2"))
             {
                 next.OxygenSaturation = Math.Min(100, next.OxygenSaturation + 5);

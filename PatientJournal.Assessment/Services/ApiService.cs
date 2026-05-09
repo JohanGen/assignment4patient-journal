@@ -4,11 +4,11 @@ using PatientJournal.Shared.Models;
 
 namespace PatientJournal.Assessment.Services;
 
-public class AssessmentApiService
+public class ApiService
 {
     private readonly HttpClient _http;
 
-    public AssessmentApiService(HttpClient http) => _http = http;
+    public ApiService(HttpClient http) => _http = http;
 
     public async Task<List<SessionSummaryDto>> GetSessionsAsync()
     {
